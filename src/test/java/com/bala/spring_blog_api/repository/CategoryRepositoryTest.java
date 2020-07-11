@@ -30,8 +30,10 @@ class CategoryRepositoryTest {
 
     @Test
     public void whenFindById() {
-        Category category = categoryRepository.findById(Mockito.anyLong()).get();
-        assertNotNull(category);
+        Category category = new Category(1L, "New", LocalDateTime.now(), LocalDateTime.now());
+        Category saved = categoryRepository.save(category);
+        Category find = categoryRepository.findById(saved.getId()).get();
+        assertNotNull(find);
     }
 
     @Test

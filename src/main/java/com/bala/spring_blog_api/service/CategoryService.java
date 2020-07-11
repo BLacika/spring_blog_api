@@ -28,8 +28,8 @@ public class CategoryService {
 
     // Create Category
     public Category createCategory(Category newCategory) {
-        // newCategory.setCreatedAt(LocalDateTime.now());
-        // newCategory.setUpdatedAt(LocalDateTime.now());
+        newCategory.setCreatedAt(LocalDateTime.now());
+        newCategory.setUpdatedAt(LocalDateTime.now());
         return categoryRepository.save(newCategory);
     }
 
@@ -40,7 +40,7 @@ public class CategoryService {
                     category.setTitle(updatedCategory.getTitle());
                     category.setUpdatedAt(LocalDateTime.now());
                     return categoryRepository.save(category);
-                });
+                }).get();
     }
 
     // Delete Category

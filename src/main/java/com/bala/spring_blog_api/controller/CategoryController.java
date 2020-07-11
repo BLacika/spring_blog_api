@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
+@RequestMapping("/api")
 public class CategoryController {
 
     private CategoryService categoryService;
@@ -39,7 +40,8 @@ public class CategoryController {
     }
 
     @DeleteMapping("/categories/{id}")
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity delete(@PathVariable Long id) {
         categoryService.deleteCategory(id);
+        return ResponseEntity.ok().body("Category deleted!");
     }
 }

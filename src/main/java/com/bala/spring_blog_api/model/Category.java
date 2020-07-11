@@ -3,8 +3,6 @@ package com.bala.spring_blog_api.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -25,10 +23,18 @@ public class Category {
     private String title;
 
     @Column(nullable = false, updatable = false)
-    @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @Column(nullable = false)
-    @LastModifiedDate
+    @Column(nullable = false, updatable = true)
     private LocalDateTime updatedAt;
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", createdAt=" + createdAt.toString() +
+                ", updatedAt=" + updatedAt.toString() +
+                '}';
+    }
 }

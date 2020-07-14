@@ -3,7 +3,6 @@ package com.bala.spring_blog_api.controller;
 import com.bala.spring_blog_api.model.Post;
 import com.bala.spring_blog_api.service.PostService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

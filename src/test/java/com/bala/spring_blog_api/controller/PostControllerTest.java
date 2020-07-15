@@ -2,11 +2,9 @@ package com.bala.spring_blog_api.controller;
 
 import com.bala.spring_blog_api.model.Category;
 import com.bala.spring_blog_api.model.Post;
-import com.bala.spring_blog_api.service.PostService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;

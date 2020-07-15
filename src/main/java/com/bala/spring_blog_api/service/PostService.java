@@ -2,7 +2,6 @@ package com.bala.spring_blog_api.service;
 
 import com.bala.spring_blog_api.model.Category;
 import com.bala.spring_blog_api.model.Post;
-import com.bala.spring_blog_api.repository.CategoryRepository;
 import com.bala.spring_blog_api.repository.PostRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor

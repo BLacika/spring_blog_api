@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -34,11 +35,11 @@ class PostControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
     @MockBean
-    private PostService postService;
+    private PostController postController;
 
     @Test
     void posts() throws Exception {
-        when(postService.getPosts()).thenReturn(Arrays.asList(
+        when(postController.posts()).thenReturn(Arrays.asList(
                 new Post(1L,
                         "Post1",
                         "Author1",
@@ -53,12 +54,12 @@ class PostControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].title", is("Post1")));
-        verify(postService, times(1)).getPosts();
+        verify(postController, times(1)).posts();
     }
 
     @Test
     void postById() throws Exception {
-        when(postService.getPostById(anyLong())).thenReturn(
+        when(postController.postById(anyLong())).thenReturn(ResponseEntity.ok(
                 new Post(1L,
                         "Post1",
                         "Author1",
@@ -67,13 +68,13 @@ class PostControllerTest {
                         "Content1",
                         "published",
                         "Tags",
-                        new Category(1L, "Teszt", LocalDateTime.now(), LocalDateTime.now()))
+                        new Category(1L, "Teszt", LocalDateTime.now(), LocalDateTime.now())))
         );
         mockMvc.perform(get("/api/posts/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.title", equalTo("Post1")))
                 .andExpect(jsonPath("$.content", is("Content1")));
-        verify(postService, times(1)).getPostById(1L);
+        verify(postController, times(1)).postById(1L);
     }
 
     @Test
@@ -89,7 +90,7 @@ class PostControllerTest {
                 new Category(1L, "Teszt", LocalDateTime.now(), LocalDateTime.now()));
         String content = objectMapper.writeValueAsString(post);
 
-        when(postService.createPost(any(Post.class))).thenReturn(post);
+        when(postController.create(any(Post.class))).thenReturn(ResponseEntity.ok(post));
 
         mockMvc.perform(post("/api/posts/create")
             .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -98,16 +99,15 @@ class PostControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json(content))
                 .andReturn();
-        verify(postService, times(1)).createPost(any(Post.class));
+        verify(postController, times(1)).create(any(Post.class));
     }
 
 
     @Test
     void deletePost() throws Exception {
-        Mockito.doNothing()
-                .when(postService).deletePostById(Mockito.any(Long.class));
+        when(postController.delete(any(Long.class))).thenReturn(ResponseEntity.ok(any(String.class)));
         mockMvc.perform(delete("/api/posts/1"))
                 .andExpect(status().isOk());
-        verify(postService, times(1)).deletePostById(1L);
+        verify(postController, times(1)).delete(1L);
     }
 }

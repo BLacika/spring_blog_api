@@ -23,14 +23,8 @@ public class UserController {
     }
 
     @GetMapping("/users/{id}")
-    public ResponseEntity<User> userById(@PathVariable Long id) {
+    public ResponseEntity<User> userById(@PathVariable("id") Long id) {
         User user = userService.getUserById(id);
-        return ResponseEntity.ok().body(user);
-    }
-
-    @GetMapping("/users/{username}")
-    public ResponseEntity<User> userByUsername(@PathVariable String username) {
-        User user = userService.getUserByUsername(username);
         return ResponseEntity.ok().body(user);
     }
 
@@ -49,9 +43,10 @@ public class UserController {
     @DeleteMapping("/users/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
         userService.deleteUser(id);
-        return ResponseEntity.ok().body("{" +
-                "'type': 'success', " +
-                "'message': 'User deleted sussessfully!'" +
-                "}");
+
+        return ResponseEntity.ok().body("{ " +
+                "\"type\": \"success\", " +
+                "\"message\": \"User deleted successfully.\"" +
+                " }");
     }
 }

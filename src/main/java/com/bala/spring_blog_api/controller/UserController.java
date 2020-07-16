@@ -4,6 +4,7 @@ import com.bala.spring_blog_api.model.User;
 import com.bala.spring_blog_api.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,13 +41,15 @@ public class UserController {
         return ResponseEntity.ok().body(updated);
     }
 
-    @DeleteMapping("/users/{id}")
+    @DeleteMapping(value = "/users/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> delete(@PathVariable Long id) {
         userService.deleteUser(id);
 
-        return ResponseEntity.ok().body("{ " +
+        String response = "{ " +
                 "\"type\": \"success\", " +
                 "\"message\": \"User deleted successfully.\"" +
-                " }");
+                " }";
+
+        return ResponseEntity.ok().body(response);
     }
 }

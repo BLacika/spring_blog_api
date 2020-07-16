@@ -3,6 +3,7 @@ package com.bala.spring_blog_api.controller;
 import com.bala.spring_blog_api.model.Post;
 import com.bala.spring_blog_api.service.PostService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,9 +40,15 @@ public class PostController {
         return ResponseEntity.ok().body(updated);
     }
 
-    @DeleteMapping("/posts/{id}")
+    @DeleteMapping(value = "/posts/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity delete(@PathVariable Long id) {
         postService.deletePostById(id);
-        return ResponseEntity.ok().body("Post deleted successfully!");
+
+        String response = "{ " +
+                "\"type\": \"success\", " +
+                "\"message\": \"Post deleted successfully.\"" +
+                " }";
+
+        return ResponseEntity.ok().body(response);
     }
 }

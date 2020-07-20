@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @Entity
@@ -28,7 +27,4 @@ public class Category {
 
     @Column(nullable = false, updatable = true)
     private LocalDateTime updatedAt;
-
-    @OneToMany(mappedBy = "categories")
-    private List<Post> posts;
 }

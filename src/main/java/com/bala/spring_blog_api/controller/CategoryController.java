@@ -1,13 +1,16 @@
 package com.bala.spring_blog_api.controller;
 
 import com.bala.spring_blog_api.model.Category;
+import com.bala.spring_blog_api.model.Post;
 import com.bala.spring_blog_api.service.CategoryService;
+import com.bala.spring_blog_api.service.PostService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @AllArgsConstructor
@@ -16,6 +19,7 @@ import java.util.List;
 public class CategoryController {
 
     private CategoryService categoryService;
+    private PostService postService;
 
     @GetMapping("/categories")
     public List<Category> categories() {
@@ -26,6 +30,13 @@ public class CategoryController {
     public ResponseEntity<Category> categoryById(@PathVariable Long id) {
         Category category = categoryService.findOne(id);
         return ResponseEntity.ok().body(category);
+    }
+
+    @GetMapping("/categories/{id}/posts")
+    public List<Post> categoryPosts(@PathVariable Long id) {
+        return postService.getPosts().stream()
+                .filter(post -> post.getCategory().getId().equals(id))
+                .collect(Collectors.toList());
     }
 
     @PostMapping("/categories/create")

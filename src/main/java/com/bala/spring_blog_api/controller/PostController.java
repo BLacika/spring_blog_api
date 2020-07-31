@@ -23,6 +23,11 @@ public class PostController {
         return postService.getPosts();
     }
 
+    @GetMapping("/posts/sorted")
+    public List<Post> sortedPosts(@RequestParam String orderBy) {
+        return postService.getPostsSorted(orderBy);
+    }
+
     @GetMapping("/posts/{id}")
     public ResponseEntity<Post> postById(@PathVariable Long id) {
         Post find = postService.getPostById(id);

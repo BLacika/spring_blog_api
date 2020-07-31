@@ -35,6 +35,7 @@ public class Post {
     @Lob
     private String content;
 
+    @Column(columnDefinition = "varchar(100) default 'unpublish'")
     private String status;
 
     private String tags;

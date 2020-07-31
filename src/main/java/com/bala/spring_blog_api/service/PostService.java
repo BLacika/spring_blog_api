@@ -4,6 +4,7 @@ import com.bala.spring_blog_api.model.Category;
 import com.bala.spring_blog_api.model.Post;
 import com.bala.spring_blog_api.repository.PostRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,23 @@ public class PostService {
      */
     public List<Post> getPosts() {
         return postRepository.findAll();
+    }
+
+    /**
+     * Get all post sorted
+     */
+    public List<Post> getPostsSorted(String orderBy) {
+       switch (orderBy) {
+            case "newest":
+                return postRepository.findAll(Sort.by(Sort.Direction.DESC, "updatedAt"));
+           case "oldest":
+               return postRepository.findAll(Sort.by(Sort.Direction.ASC, "updatedAt"));
+           case "a-z":
+               return postRepository.findAll(Sort.by(Sort.Direction.ASC, "title"));
+           case "z-a":
+               return postRepository.findAll(Sort.by(Sort.Direction.DESC, "title"));
+        }
+        return null;
     }
 
     /**
